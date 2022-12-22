@@ -127,31 +127,85 @@
 <!--                <log message="[filter]   Order ${header.orderId} is an order for more than 100 animals"/>-->
 <!--            </filter>-->
 <!--        </route>-->
-
+    <bean id = "activemq" class = "org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name = "brokerURL" value = "tcp://localhost:61616"/>
+        <property name = "userName" value = "admin"/>
+        <property name = "password" value = "admin"/>
+    </bean>
 
 <!--    </camelContext>-->
     <camelContext xmlns="http://camel.apache.org/schema/blueprint" xmlns:order="http://fabric8.com/examples/order/v7"
                   id="test-context">
-        <route id="fileReaderRoute">
-            <from uri="file:source/"/>
-            <log message="file is consumed : ${file:name}"/>
-            <to uri="direct:routeB"/>
-            <to uri="direct:routeC"/>
+
+
+<!--        <route id="fileReaderRoute">-->
+<!--            <from uri="file:source/"/>-->
+<!--            <log message="file is consumed : ${file:name}"/>-->
+<!--            <to uri="direct:routeB"/>-->
+<!--            <to uri="direct:routeC"/>-->
+<!--        </route>-->
+
+        <route id="routeActiveMQConsumer">
+            <from uri="activemq:queue:testQ"/>
+            <log message="routeActiveMQ Queue 1 : ${body}" />
         </route>
 
-        <route id="routeB">
-            <from uri="direct:routeB"/>
-            <delay>
-                <constant>5000</constant>
-            </delay>
-            <log message="file is renamed with b"/>
-            <to uri="file:destinationB/?fileName=${file:name.noext}B.txt"/>
+        <route id="routeActiveMQConsumer2">
+            <from uri="activemq:queue:testQ"/>
+            <log message="routeActiveMQ  Queue 2 : ${body}" />
         </route>
 
-        <route id="routeC">
-            <from uri="direct:routeC"/>
-            <log message="file is renamed with C"/>
-            <to uri="file:destinationC/?fileName=${file:name.noext}C.txt"/>
+        <route id="routeActiveMQConsumerT1">
+            <from uri="activemq:topic:testTopic"/>
+            <log message="routeActiveMQ  Topic 1 : ${body}" />
         </route>
+
+        <route id="routeActiveMQConsumerT2">
+            <from uri="activemq:topic:testTopic"/>
+            <log message="routeActiveMQ  Topic 2 : ${body}" />
+        </route>
+
+        <route id="routeActiveMQProducer">
+           <from uri="timer://test?fixedRate=true&amp;period=1000"/>
+            <setBody>
+                <constant>Hello Queue P1</constant>
+            </setBody>
+            <to uri="activemq:queue:testQ"/>
+            <log message="routeActiveMQ 1 producer queue  ${body}"/>
+        </route>
+
+        <route id="routeActiveMQProducer2">
+            <from uri="timer://test?fixedRate=true&amp;period=1000"/>
+            <setBody>
+                <constant>Hello Queue P2</constant>
+            </setBody>
+            <to uri="activemq:queue:testQ"/>
+            <log message="routeActiveMQ 2 producer queue ${body}"/>
+        </route>
+
+
+        <route id="routeActiveMQProducerTopic">
+            <from uri="timer://test?fixedRate=true&amp;period=1000"/>
+            <setBody>
+                <constant>Hello topic</constant>
+            </setBody>
+            <to uri="activemq:topic:testQ"/>
+            <log message="routeActiveMQ  producer topic  ${body}"/>
+        </route>
+
+<!--        <route id="routeB">-->
+<!--            <from uri="direct:routeB"/>-->
+<!--            <delay>-->
+<!--                <constant>5000</constant>-->
+<!--            </delay>-->
+<!--            <log message="file is renamed with b"/>-->
+<!--            <to uri="file:destinationB/?fileName=${file:name.noext}B.txt"/>-->
+<!--        </route>-->
+
+<!--        <route id="routeC">-->
+<!--            <from uri="direct:routeC"/>-->
+<!--            <log message="file is renamed with C"/>-->
+<!--            <to uri="file:destinationC/?fileName=${file:name.noext}C.txt"/>-->
+<!--        </route>-->
     </camelContext>
 </blueprint>

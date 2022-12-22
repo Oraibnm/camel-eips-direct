@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1671538270046
+Bnd-LastModified: 1671714596784
 Build-Jdk: 11.0.16.1
 Built-By: Oraib.Maswadeh
 Bundle-Description: Camel using mutliple EIPs into a single solution
@@ -11,6 +11,7 @@ Bundle-Version: 6.2.1.redhat-084
 Created-By: Apache Maven Bundle Plugin
 Export-Package: io.fabric8.quickstarts.eip;uses:="org.apache.camel.langu
  age";version="6.2.1.redhat-084"
-Import-Package: org.apache.camel.language;version="[2.15,3)",org.osgi.se
- rvice.blueprint;version="[1.0.0,2.0.0)"
+Import-Package: org.apache.activemq.camel.component,org.apache.camel.lan
+ guage;version="[2.15,3)",org.osgi.service.blueprint;version="[1.0.0,2.0
+ .0)"
 Tool: Bnd-1.50.0

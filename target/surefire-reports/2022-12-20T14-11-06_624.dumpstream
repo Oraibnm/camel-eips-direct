@@ -1,5 +1,0 @@
-# Created at 2022-12-20T14:11:07.706
-Boot Manifest-JAR contains absolute paths in classpath 'Y:\jboss-fuse-6.2.1.redhat-084\quickstarts\beginner\camel-eips\target\test-classes'
-Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
-'other' has different root
-
