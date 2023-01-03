@@ -1,7 +1,9 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1671714596784
+Bnd-LastModified: 1672658505164
 Build-Jdk: 11.0.16.1
 Built-By: Oraib.Maswadeh
+Bundle-Blueprint: OSGI-INF/blueprint/applicationContext.xml,OSGI-INF/blu
+ eprint/eip.xml
 Bundle-Description: Camel using mutliple EIPs into a single solution
 Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.html
 Bundle-ManifestVersion: 2
@@ -9,9 +11,12 @@ Bundle-Name: JBoss Fuse Quickstart: camel-eips
 Bundle-SymbolicName: org.jboss.quickstarts.fuse.beginner-camel-eips
 Bundle-Version: 6.2.1.redhat-084
 Created-By: Apache Maven Bundle Plugin
-Export-Package: io.fabric8.quickstarts.eip;uses:="org.apache.camel.langu
- age";version="6.2.1.redhat-084"
-Import-Package: org.apache.activemq.camel.component,org.apache.camel.lan
- guage;version="[2.15,3)",org.osgi.service.blueprint;version="[1.0.0,2.0
+Export-Package: io.fabric8.quickstarts.eip;uses:="javax.ws.rs,org.apache
+ .camel,org.apache.camel.language";version="6.2.1.redhat-084"
+Import-Package: com.javainuse.beans,javax.ws.rs;version="[2.0,3)",org.ap
+ ache.activemq.camel.component,org.apache.camel;version="[2.15,3)",org.a
+ pache.camel.builder;version="[2.15,3)",org.apache.camel.impl;version="[
+ 2.15,3)",org.apache.camel.language;version="[2.15,3)",org.apache.camel.
+ model;version="[2.15,3)",org.osgi.service.blueprint;version="[1.0.0,2.0
  .0)"
-Tool: Bnd-1.50.0
+Tool: Bnd-2.1.0.20130426-122213

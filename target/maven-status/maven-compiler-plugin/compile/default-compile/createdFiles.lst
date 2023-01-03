@@ -1,1 +1,9 @@
+io\fabric8\quickstarts\eip\FileCopy$1.class
+io\fabric8\quickstarts\eip\HelloWorld.class
 io\fabric8\quickstarts\eip\RegionSupport.class
+io\fabric8\quickstarts\eip\CamelProcessor.class
+io\fabric8\quickstarts\eip\ListFileName.class
+io\fabric8\quickstarts\eip\FileModel.class
+io\fabric8\quickstarts\eip\FileCopy.class
+io\fabric8\quickstarts\eip\HelloWorldImp.class
+io\fabric8\quickstarts\eip\EmployeeServiceResource.class

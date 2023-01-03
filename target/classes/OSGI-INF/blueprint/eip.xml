@@ -26,7 +26,6 @@
            xsi:schemaLocation="
              http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
              http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
-
     <!--
       We are using the OSGi Blueprint XML syntax to define a bean that we use in our Camel route to determine
       the geographical region. The code for this bean can be found in src/main/java/io/fabric8/quickstarts/fabric/eip/RegionSupport.java
@@ -133,17 +132,16 @@
         <property name = "password" value = "admin"/>
     </bean>
 
-<!--    </camelContext>-->
     <camelContext xmlns="http://camel.apache.org/schema/blueprint" xmlns:order="http://fabric8.com/examples/order/v7"
                   id="test-context">
 
 
-<!--        <route id="fileReaderRoute">-->
-<!--            <from uri="file:source/"/>-->
-<!--            <log message="file is consumed : ${file:name}"/>-->
-<!--            <to uri="direct:routeB"/>-->
-<!--            <to uri="direct:routeC"/>-->
-<!--        </route>-->
+        <route id="fileReaderRoute">
+            <from uri="file:source/"/>
+            <log message="file is consumed : ${file:name}"/>
+            <to uri="direct:routeB"/>
+            <to uri="direct:routeC"/>
+        </route>
 
         <route id="routeActiveMQConsumer">
             <from uri="activemq:queue:testQ"/>
@@ -165,10 +163,11 @@
             <log message="routeActiveMQ  Topic 2 : ${body}" />
         </route>
 
-        <route id="routeActiveMQProducer">
+
+        <route id="i">
            <from uri="timer://test?fixedRate=true&amp;period=1000"/>
             <setBody>
-                <constant>Hello Queue</constant>
+                <constant>Hello Queue P1</constant>
             </setBody>
             <to uri="activemq:queue:testQ"/>
             <log message="routeActiveMQ 1 producer queue  ${body}"/>
@@ -177,7 +176,7 @@
         <route id="routeActiveMQProducer2">
             <from uri="timer://test?fixedRate=true&amp;period=1000"/>
             <setBody>
-                <constant>Hello Queue</constant>
+                <constant>Hello Queue P2</constant>
             </setBody>
             <to uri="activemq:queue:testQ"/>
             <log message="routeActiveMQ 2 producer queue ${body}"/>
@@ -193,6 +192,10 @@
             <log message="routeActiveMQ  producer topic  ${body}"/>
         </route>
 
+
+
+
+
 <!--        <route id="routeB">-->
 <!--            <from uri="direct:routeB"/>-->
 <!--            <delay>-->
@@ -207,5 +210,88 @@
 <!--            <log message="file is renamed with C"/>-->
 <!--            <to uri="file:destinationC/?fileName=${file:name.noext}C.txt"/>-->
 <!--        </route>-->
+    </camelContext>
+
+
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint" xmlns:order="http://fabric8.com/examples/order/v7"
+                  id="oraib-context">
+
+        
+
+
+
+<!--       add three consumer for main queue-->
+        <route id ="QueueConsumer1">
+            <from uri="activemq:queue:mainQueue"/>
+            <log message="Consumer1 - Queue  : ${body}" />
+        </route>
+        <route id ="QueueConsumer2">
+            <from uri="activemq:queue:mainQueue"/>
+            <log message="Consumer2 -Queue  : ${body}" />
+        </route>
+        <route id ="QueueConsumer3">
+            <from uri="activemq:queue:mainQueue"/>
+            <log message="Consumer3 -Queue  : ${body}" />
+        </route>
+<!--       add three consumer for main topic-->
+        <route id ="TopicConsumer1">
+            <from uri="activemq:topic:mainTopic"/>
+            <log message="Consumer1 -Topic  : ${body}" />
+        </route>
+        <route id ="TopicConsumer2">
+            <from uri="activemq:topic:mainTopic"/>
+            <log message="Consumer2 -Topic  : ${body}" />
+        </route>
+        <route id ="TopicConsumer3">
+            <from uri="activemq:topic:mainTopic"/>
+            <log message="Consumer3 -Topic  : ${body}" />
+        </route>
+<!--       add two producer for main queue-->
+
+        <route id="QueueProducer1">
+            <from uri="timer://test?fixedRate=true&amp;period=1000"/>
+            <setBody>
+                <constant> Queue Producer1</constant>
+            </setBody>
+            <to uri="activemq:queue:mainQueue"/>
+            <log message=" producer-1 queue  ${body}"/>
+        </route>
+        <route id="QueueProducer2">
+        <from uri="timer://test?fixedRate=true&amp;period=1000"/>
+        <setBody>
+            <constant> Queue Producer2</constant>
+            </setBody>
+            <to uri="activemq:queue:mainQueue"/>
+            <log message=" producer-2 queue  ${body}"/>
+        </route>
+        <!--       add two producer for main topic-->
+
+        <route id="TopicProducer1">
+            <from uri="timer://test?fixedRate=true&amp;period=1000"/>
+            <setBody>
+                <constant> Topic Producer1</constant>
+            </setBody>
+            <to uri="activemq:topic:mainTopic"/>
+            <log message=" producer-1 topic  ${body}"/>
+        </route>
+
+        <route id="TopicProducer2">
+            <from uri="timer://test?fixedRate=true&amp;period=1000"/>
+            <setBody>
+                <constant> Topic Producer2</constant>
+            </setBody>
+            <to uri="activemq:topic:mainTopic"/>
+            <log message=" producer-2 topic  ${body}"/>
+        </route>
+
+    </camelContext>
+
+
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint"  id="cxf-context">
+        <route>
+            <from uri="ftp:myserver/folder"/>
+            <to uri="activemq:queue:cheese"/>
+        </route>
+
     </camelContext>
 </blueprint>
